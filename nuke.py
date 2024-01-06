@@ -6,6 +6,7 @@ import os
 TEMPLATES_PATH = os.path.expanduser("~/nuclei-templates")
 NUCLEI_PATH = os.path.expanduser("~/go/bin/nuclei")
 API_KEY = ''
+DOMAIN = 'glimpse.me'
 
 def check_go_installation():
     try:
@@ -17,21 +18,21 @@ def check_go_installation():
         print("There was an error running Go.")
         sys.exit(1)
 
-def write_subdomains_to_file(subdomains):
+def write_subdomains_to_file(subdomains, domain):
     if subdomains:
-        file_name = f"{DOMAIN.replace('.', '_')}.txt"
+        file_name = f"{domain.replace('.', '_')}.txt"
         with open(file_name, 'w') as file:
             for subdomain in subdomains:
-                file.write(f"{subdomain}.{DOMAIN}\n")
+                file.write(f"{subdomain}.{domain}\n")
         return file_name
     else:
-        print(f"No subdomains found for {DOMAIN}")
+        print(f"No subdomains found for {domain}")
         sys.exit(1)
 
-def write_domain_to_file():
-    file_name = f"{DOMAIN.replace('.', '_')}.txt"
+def write_domain_to_file(domain):
+    file_name = f"{domain.replace('.', '_')}.txt"
     with open(file_name, 'w') as file:
-        file.write(DOMAIN + "\n")
+        file.write(domain + "\n")
     return file_name
 
 def install_pysecuritytrails():
@@ -67,7 +68,7 @@ def run_nuclei(file_name):
 
 def main():
     print(f"Do not put in https:// or a trailing slash")
-    DOMAIN = input(f"What is the targete like example.com or 127.0.0.1: ")
+    DOMAIN = input(f"What is the target like example.com or 127.0.0.1: ")
     file_name = ''
     if API_KEY:
         install_pysecuritytrails()
@@ -85,7 +86,7 @@ def main():
             sys.exit(1)
     else:
         print("API key is not set. Running against the main domain.")
-        file_name = write_domain_to_file()
+        file_name = write_domain_to_file(DOMAIN)
 
     check_nuclei_installation()
     check_nuclei_templates()
