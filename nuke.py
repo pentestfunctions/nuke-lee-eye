@@ -6,7 +6,6 @@ import os
 TEMPLATES_PATH = os.path.expanduser("~/nuclei-templates")
 NUCLEI_PATH = os.path.expanduser("~/go/bin/nuclei")
 API_KEY = ''
-DOMAIN = 'glimpse.me'
 
 def check_go_installation():
     try:
@@ -67,6 +66,8 @@ def run_nuclei(file_name):
     subprocess.run([NUCLEI_PATH, "-l", file_name, "-fr", "-uc", "-headless", "-t", TEMPLATES_PATH], check=True)
 
 def main():
+    print(f"Do not put in https:// or a trailing slash")
+    DOMAIN = input(f"What is the targete like example.com or 127.0.0.1: ")
     file_name = ''
     if API_KEY:
         install_pysecuritytrails()
