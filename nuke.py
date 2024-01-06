@@ -6,7 +6,7 @@ import os
 TEMPLATES_PATH = os.path.expanduser("~/nuclei-templates")
 NUCLEI_PATH = os.path.expanduser("~/go/bin/nuclei")
 API_KEY = ''
-DOMAIN = 'glimpse.me'
+DOMAIN = ''
 
 def check_go_installation():
     try:
